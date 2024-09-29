@@ -16,9 +16,9 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    env:
+      TOKEN: "SOME_TOKEN"
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
