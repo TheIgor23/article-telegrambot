@@ -11,19 +11,33 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
+import ru.jezemoin.article_telegrambot.command.CommandContainer;
+import ru.jezemoin.article_telegrambot.service.SendBotMessageServiceImpl;
+
+import static ru.jezemoin.article_telegrambot.command.CommandName.NO;
+
 
 @Component
-public class JavaRushTelegramBot  implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
+public class JavaTelegramBot implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
+
+    public static String COMMAND_PREFIX = "/";
+
+
+    @Value("${bot.token}")
+    private String token;
+
     private TelegramClient telegramClient;
+
+    private final CommandContainer commandContainer;
+
+    public JavaTelegramBot() {
+        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this));
+    }
 
     @PostConstruct
     public void setTelegramClient() {
         telegramClient = new OkHttpTelegramClient(getBotToken());
     }
-
-    @Value("${bot.token}")
-    private String token;
-
 
     @Override
     public String getBotToken() {
@@ -38,17 +52,22 @@ public class JavaRushTelegramBot  implements SpringLongPollingBot, LongPollingSi
     @Override
     public void consume(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            // Set variables
-            String message_text = update.getMessage().getText();
-            long chat_id = update.getMessage().getChatId();
 
-            SendMessage message = SendMessage // Create a message object
-                    .builder()
-                    .chatId(chat_id)
-                    .text(message_text)
-                    .build();
+            String message_text = update.getMessage().getText().trim();
+            if(message_text.startsWith(COMMAND_PREFIX)){
+                String commandIdentifier = message_text.split(" ")[0].toLowerCase();
+
+                commandContainer.retrieveCommand(commandIdentifier).execute(update);
+            } else {
+                commandContainer.retrieveCommand(NO.getCommandName()).execute(update);
+            }
+        }
+    }
+
+    public void sendAnswerMessage(SendMessage message) {
+        if(message!=null) {
             try {
-                telegramClient.execute(message); // Sending our message object to user
+                telegramClient.execute(message);
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
