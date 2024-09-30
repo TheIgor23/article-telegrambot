@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ru.jezemoin</groupId>
 	<artifactId>article-telegrambot</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+	<version>0.3.0-SNAPSHOT</version>
 	<name>Article Telegram Bot</name>
 	<description>Telegram bot notify new article</description>
 	<url/>
