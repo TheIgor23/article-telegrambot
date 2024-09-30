@@ -1,6 +1,7 @@
 package ru.jezemoin.article_telegrambot.bot;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
@@ -13,6 +14,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 import ru.jezemoin.article_telegrambot.command.CommandContainer;
 import ru.jezemoin.article_telegrambot.service.SendBotMessageServiceImpl;
+import ru.jezemoin.article_telegrambot.service.TelegramUserService;
 
 import static ru.jezemoin.article_telegrambot.command.CommandName.NO;
 
@@ -30,8 +32,9 @@ public class JavaTelegramBot implements SpringLongPollingBot, LongPollingSingleT
 
     private final CommandContainer commandContainer;
 
-    public JavaTelegramBot() {
-        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this));
+    @Autowired
+    public JavaTelegramBot(TelegramUserService telegramUserService) {
+        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this), telegramUserService);
     }
 
     @PostConstruct

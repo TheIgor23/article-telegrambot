@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ru.jezemoin</groupId>
 	<artifactId>article-telegrambot</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.4.0-SNAPSHOT</version>
 	<name>Article Telegram Bot</name>
 	<description>Telegram bot notify new article</description>
 	<url/>
@@ -31,8 +31,35 @@
 		<telegrambots.client.version>7.10.0</telegrambots.client.version>
 		<telegrambots.longpooling.starter.version>7.10.0</telegrambots.longpooling.starter.version>
 		<guava.version>32.1.2-jre</guava.version>
+		<mysql.connector.version>8.0.33</mysql.connector.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
