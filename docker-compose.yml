@@ -2,7 +2,22 @@ version: '3.1'
 
 services:
   jtb:
+    depends_on:
+      - jtb-db
     build:
       context: .
     env_file: .env/jtb.env
     restart: always
+
+  jtb-db:
+    image: mysql:8.0
+    restart: always
+    container_name: jtb-db
+    ports:
+      - "3306:3306"
+    env_file: .env/jtb.env
+    expose:
+      - "3306"
+    environment:
+      MYSQL_DATABASE: 'jtb_db'
+      MYSQL_ROOT_PASSWORD: 'root'
