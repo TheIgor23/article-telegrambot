@@ -32,8 +32,31 @@
 		<telegrambots.longpooling.starter.version>7.10.0</telegrambots.longpooling.starter.version>
 		<guava.version>32.1.2-jre</guava.version>
 		<mysql.connector.version>8.0.33</mysql.connector.version>
+		<unirest.version>4.4.0</unirest.version>
+
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.konghq</groupId>
+				<artifactId>unirest-java-bom</artifactId>
+				<version>${unirest.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
+		<dependency>
+			<groupId>com.konghq</groupId>
+			<artifactId>unirest-java-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.konghq</groupId>
+			<artifactId>unirest-modules-jackson</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
