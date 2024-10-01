@@ -8,14 +8,20 @@ import static ru.jezemoin.article_telegrambot.command.CommandName.*;
 public class HelpCommand implements Command{
     private final SendBotMessageService sendBotMessageService;
 
-    public static final String HELP_MESSAGE = String.format("✨ <b> Доступные команды </b> ✨\n\n"
+    public static final String HELP_MESSAGE = String.format("✨<b> Доступные команды </b>✨ \n\n"
 
                     + "<b> Начать\\закончить работу с ботом </b>\n"
                     + "%s - начать работу со мной\n"
                     + "%s - приостановить работу со мной\n\n"
+
+                    + "Работа с подписками на группы:\n"
+                    + "%s - подписаться на группу статей\n"
+                    + "%s - получить список групп, на которые подписан\n\n"
+
                     + "%s - получить статистику\n\n"
+
                     + "%s - получить помощь в работе со мной\n",
-            START.getCommandName(), STOP.getCommandName(), STAT.getCommandName() ,HELP.getCommandName());
+            START.getCommandName(), STOP.getCommandName(), ADD_GROUP_SUB.getCommandName(), LIST_GROUP_SUB.getCommandName(),STAT.getCommandName() ,HELP.getCommandName());
 
     public HelpCommand(SendBotMessageService sendBotMessageService) {
         this.sendBotMessageService = sendBotMessageService;

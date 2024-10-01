@@ -12,7 +12,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
+import ru.jezemoin.article_telegrambot.articleclient.JavaGroupClient;
 import ru.jezemoin.article_telegrambot.command.CommandContainer;
+import ru.jezemoin.article_telegrambot.service.GroupSubService;
 import ru.jezemoin.article_telegrambot.service.SendBotMessageServiceImpl;
 import ru.jezemoin.article_telegrambot.service.TelegramUserService;
 
@@ -33,8 +35,9 @@ public class JavaTelegramBot implements SpringLongPollingBot, LongPollingSingleT
     private final CommandContainer commandContainer;
 
     @Autowired
-    public JavaTelegramBot(TelegramUserService telegramUserService) {
-        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this), telegramUserService);
+    public JavaTelegramBot(TelegramUserService telegramUserService, JavaGroupClient groupClient, GroupSubService groupSubService) {
+        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this), telegramUserService,
+                groupClient, groupSubService);
     }
 
     @PostConstruct

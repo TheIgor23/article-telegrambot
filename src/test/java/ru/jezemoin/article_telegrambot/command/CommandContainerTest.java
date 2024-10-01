@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import ru.jezemoin.article_telegrambot.articleclient.JavaGroupClient;
+import ru.jezemoin.article_telegrambot.service.GroupSubService;
 import ru.jezemoin.article_telegrambot.service.SendBotMessageService;
 import ru.jezemoin.article_telegrambot.service.SendBotMessageServiceImpl;
 import ru.jezemoin.article_telegrambot.service.TelegramUserService;
@@ -19,7 +21,9 @@ public class CommandContainerTest {
     public void init(){
         SendBotMessageService sendBotMessageService = Mockito.mock(SendBotMessageServiceImpl.class);
         TelegramUserService telegramUserService = Mockito.mock(TelegramUserService.class);
-        commandContainer = new CommandContainer(sendBotMessageService, telegramUserService);
+        JavaGroupClient groupClient = Mockito.mock(JavaGroupClient.class);
+        GroupSubService groupSubService = Mockito.mock(GroupSubService.class);
+        commandContainer = new CommandContainer(sendBotMessageService, telegramUserService, groupClient, groupSubService);
     }
 
     @Test
